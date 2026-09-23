@@ -14,7 +14,7 @@ let nextId = 3; // penghitung id untuk data baru
 
 // route /
 app.get("/", (req, res) => {
-  res.send("Server Express.js berjalan pada port 30001!");
+  res.send("Server Express.js berjalan pada port " + PORT);
 });
 
 // GET /mahasiswa -> seluruh data, bisa difilter: /mahasiswa?jurusan=Informatika
