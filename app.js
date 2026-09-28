@@ -2,6 +2,15 @@ const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+function logger(req, res, next) {
+  const waktu = new Date().toISOString();
+  console.log(`[${waktu}] ${req.method} ${req.url}`);
+  next(); // wajib, agar request lanjut ke handler berikutnya
+}
+
+// Didaftarkan sebelum route agar mencatat seluruh request
+app.use(logger);
+
 app.use(express.json());
 
 let mahasiswa = [
