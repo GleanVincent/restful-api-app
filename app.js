@@ -2,16 +2,22 @@ require("dotenv").config();
 const mongoose = require('mongoose');  
 const express = require("express");
 const cors = require("cors");
+
 const logger = require("./middlewares/logger");
 const { notFoundHandler, errorHandler } = require("./middlewares/errorHandler");
+
 const mahasiswaRoutes = require("./routes/mahasiswaRoutes");
 const fakultasRoutes = require("./routes/fakultasRoutes");
 const prodiRoutes = require("./routes/prodiRoutes");
+const authRoutes = require("./routes/authRoutes");
+
+if (!process.env.JWT_SECRET) {
+  console.error("JWT_SECRET belum diisi di .env");
+  process.exit(1);
+}
+
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-
-
 
 // ---------- Middleware global ----------
 app.use(logger);
@@ -32,7 +38,7 @@ app.get("/", (req, res) => {
 app.use("/mahasiswa", mahasiswaRoutes);
 app.use("/fakultas", fakultasRoutes);
 app.use("/prodi", prodiRoutes);
-
+app.use("/auth", authRoutes);
 // ---------- Handler 404 dan error handler (paling bawah) ----------
 app.use(notFoundHandler);
 app.use(errorHandler);
